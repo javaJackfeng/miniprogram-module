@@ -1,0 +1,65 @@
+{
+    "component": {
+      "folder": "{{name}}",
+      "files": [
+        {
+          "name": "{{name}}.wxml",
+          "content": [
+            "<view class=\"{{name}}_component_wrapper\">{{name}}</view>"
+          ]
+        },
+        {
+          "name": "{{name}}.less",
+          "content": [
+            ".{{name}}_component_wrapper {",
+            "}"
+          ]
+        },
+        {
+          "name": "{{name}}.js",
+          "content": []
+        },
+        {
+          "name": "{{name}}.json",
+          "content": [
+            "{",
+            "  \"component\": true,",
+            "  \"usingComponents\": {",
+            "  }",
+            "}"
+          ]
+        }
+      ]
+    },
+    "page": {
+      "folder": "{{name}}",
+      "files": [
+        {
+          "name": "{{name}}.wxml",
+          "content": [
+            "<view class=\"{{name}}_page_wrapper\">{{name}}</view>"
+          ]
+        },
+        {
+          "name": "{{name}}.less",
+          "content": [
+            ".{{name}}_page_wrapper {",
+            "}"
+          ]
+        },
+        {
+          "name": "{{name}}.js",
+          "content": []
+        },
+        {
+          "name": "{{name}}.json",
+          "content": [
+            "{",
+            "  \"usingComponents\": {",
+            "  }",
+            "}"
+          ]
+        }
+      ]
+    }
+  }
