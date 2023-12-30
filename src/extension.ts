@@ -8,8 +8,7 @@ import {
 import Handlebars from 'handlebars';
 import getTemplate from "./get-template";
 import * as fse from "fs-extra";
-import { templateType, FileTemplate, subPackage } from "./config"
-const _ = require('lodash');
+import { templateType, FileTemplate, subPackage } from "./config";
 
 const prompt = async (question: string, defaultValue?: string) => {
   const answer = await window.showInputBox({
@@ -20,33 +19,33 @@ const prompt = async (question: string, defaultValue?: string) => {
 };
 
 const render: (template: string, data: Record<string, any>)  => string = (template, data) => {
-  const tem = Handlebars.compile(template)
-  return tem(data)
-}
+  const tem = Handlebars.compile(template);
+  return tem(data);
+};
 
 async function updateJsonFile(filePath: string, pathArr: string[], name: string) {
   try {
     // Read the existing JSON file
     const existingData = await fse.readJSON(filePath);
-    const existingDataCopy = _.cloneDeep(existingData);
-    const subPackages = existingDataCopy.subPackages
-    const firstPath = pathArr[0]
-    const isModule = subPackages.find((item: subPackage) => item.root === firstPath)
-    const pagePath = (isModule ? pathArr.slice(1).join('/') : pathArr.join('/')) + `/${name}`
+    const existingDataCopy = JSON.parse(JSON.stringify(existingData));
+    const subPackages = existingDataCopy.subPackages || [];
+    const firstPath = pathArr[0];
+    const isModule = subPackages.find((item: subPackage) => item.root === firstPath);
+    const pagePath = (isModule ? pathArr.slice(1).join('/') : pathArr.join('/')) + `/${name}`;
 
     if (isModule) {
-      const ObjSubPackages = existingDataCopy.subPackages
-      const subModuleItemIndex = ObjSubPackages.findIndex((item: subPackage) => item.root === firstPath)
-      const subModuleItem = existingDataCopy.subPackages[subModuleItemIndex]
-      existingDataCopy.subPackages[subModuleItemIndex].pages = subModuleItem.pages.concat([pagePath])
+      const ObjSubPackages = existingDataCopy.subPackages;
+      const subModuleItemIndex = ObjSubPackages.findIndex((item: subPackage) => item.root === firstPath);
+      const subModuleItem = existingDataCopy.subPackages[subModuleItemIndex];
+      existingDataCopy.subPackages[subModuleItemIndex].pages = subModuleItem.pages.concat([pagePath]);
     } else {
-      existingDataCopy.pages = existingDataCopy.pages.concat([pagePath])
+      existingDataCopy.pages = existingDataCopy.pages.concat([pagePath]);
     }
 
     const updatedJsonString = JSON.stringify(existingDataCopy, null, 2);
     await fse.writeFile(filePath, updatedJsonString);
   } catch (error) {
-    window.showErrorMessage("更新app.json出错");
+    window.showErrorMessage(`更新app.json出错, ${JSON.stringify(error)}`);
   }
 }
 
@@ -73,29 +72,29 @@ async function newFromTemplate(uri: Uri | undefined, type: templateType) {
 	if (!template) {
 		return;
 	}
-  const question = type === templateType.component ? '请输入组件名称' : ( type === templateType.page ) ?  '请输入页面名称' : ''
+  const question = type === templateType.component ? '请输入组件名称' : ( type === templateType.page ) ?  '请输入页面名称' : '';
   if (!question) {
-    return
+    return;
   }
   const name = await prompt(question);
   if (!name) {
     window.showErrorMessage(question || '请输入名称');
-    return
+    return;
   }
-  const folderName = render(template.folder, { name })
+  const folderName = render(template.folder, { name });
   const folderPath = getFolderPath(uri, root, folderName);
-  const allDirectories = getAllDirectories(folderPath)
-  const rootIndex = allDirectories.indexOf(root.name)
-  const newPathArr = allDirectories.slice(rootIndex + 1)
+  const allDirectories = getAllDirectories(folderPath);
+  const rootIndex = allDirectories.indexOf(root.name);
+  const newPathArr = allDirectories.slice(rootIndex + 1);
   template.files.forEach(async (item: FileTemplate) => {
-    const contentText = render(item.content.join('\n'), { name })
-    const fileName = render(item.name, { name })
+    const contentText = render(item.content.join('\n'), { name });
+    const fileName = render(item.name, { name });
     const filePath = path.join(folderPath, fileName);
     await fse.outputFile(filePath, contentText);
-  })
-  const appJSONPath = path.join(root.uri.fsPath, 'app.json')
+  });
+  const appJSONPath = path.join(root.uri.fsPath, 'app.json');
   if (type === templateType.page && fse.pathExistsSync(appJSONPath)) {
-    updateJsonFile(appJSONPath, newPathArr, name as string)
+    updateJsonFile(appJSONPath, newPathArr, name as string);
   }
 }
 
@@ -121,8 +120,6 @@ export function activate(context: ExtensionContext) {
       });
     },
   );   
-  
-  context.subscriptions.push(disposablePage);
 
 }
 

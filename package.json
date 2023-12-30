@@ -2,6 +2,7 @@
   "name": "miniprogram-module",
   "displayName": "miniprogram-module",
   "description": "微信小程序创建page 和 component 模板",
+  "publisher": "fengphil",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.85.0"
@@ -9,12 +10,24 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [
-    "onCommand:miniprogram-module.createWxMiniComponent",
-    "onCommand:miniprogram-module.createWxMiniPage"
+  "keywords": [
+    "微信小程序模板"
   ],
+  "activationEvents": [],
   "main": "./dist/extension.js",
   "contributes": {
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "miniprogram-module.createWxMiniComponent",
+          "group": "navigation@10"
+        },
+        {
+          "command": "miniprogram-module.createWxMiniPage",
+          "group": "navigation@10"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "miniprogram-module.createWxMiniComponent",
