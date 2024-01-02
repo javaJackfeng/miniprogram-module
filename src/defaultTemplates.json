@@ -17,7 +17,11 @@
         },
         {
           "name": "{{name}}.js",
-          "content": []
+          "content": [
+            "Component({",
+            "  data: {}",
+            "})"
+          ]
         },
         {
           "name": "{{name}}.json",
@@ -49,7 +53,14 @@
         },
         {
           "name": "{{name}}.js",
-          "content": []
+          "content": [
+            "Page({",
+            "  data: {},",
+            "  onLoad() {},",
+            "  onShow() {},",
+            "  onHide() {}",
+            "})"
+          ]
         },
         {
           "name": "{{name}}.json",
