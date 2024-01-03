@@ -85,7 +85,7 @@ async function newFromTemplate(uri: Uri | undefined, type: templateType) {
   const folderPath = getFolderPath(uri, root, folderName);
   const allDirectories = getAllDirectories(folderPath);
   const rootIndex = allDirectories.indexOf(root.name);
-  const relativePath = uri?.fsPath ? `../${path.relative(uri?.fsPath, root.uri.path)}` : ''
+  const relativePath = uri?.path ? `../${path.relative(uri?.path, root.uri.path)}` : ''
   const newPathArr = allDirectories.slice(rootIndex + 1);
   template.files.forEach(async (item: FileTemplate) => {
     const contentText = render(item.content.join('\n'), { name, workspaceFolder: relativePath });
