@@ -3,7 +3,8 @@
   "displayName": "miniprogram-module",
   "description": "微信小程序创建page 和 component 模板",
   "publisher": "fengphil",
-  "version": "0.0.4",
+  "version": "0.0.5",
+  "icon": "module_logo.png",
   "engines": {
     "vscode": "^1.85.0"
   },
