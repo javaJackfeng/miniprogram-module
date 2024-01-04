@@ -4,7 +4,7 @@
   "description": "微信小程序创建page 和 component 模板",
   "publisher": "fengphil",
   "version": "0.0.5",
-  "icon": "module_logo.png",
+  "icon": "logo.png",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -12,8 +12,16 @@
     "Other"
   ],
   "keywords": [
-    "微信小程序模板"
+    "微信小程序模板",
+    "module",
+    "wxml",
+    "WX"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/javaJackfeng/miniprogram-module"
+  },
+  "license": "MIT",
   "activationEvents": [],
   "main": "./dist/extension.js",
   "contributes": {
