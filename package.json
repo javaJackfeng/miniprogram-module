@@ -4,7 +4,7 @@
   "description": "微信小程序创建page 和 component 模板",
   "publisher": "fengphil",
   "version": "0.0.5",
-  "icon": "logo.png",
+  "icon": "icon.png",
   "engines": {
     "vscode": "^1.85.0"
   },
