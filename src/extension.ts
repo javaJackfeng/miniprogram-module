@@ -85,10 +85,11 @@ async function newFromTemplate(uri: Uri | undefined, type: templateType) {
   const folderPath = getFolderPath(uri, root, folderName);
   const allDirectories = getAllDirectories(folderPath);
   const rootIndex = allDirectories.indexOf(root.name);
-  const relativePath = uri?.path ? `../${path.relative(uri?.path, root.uri.path)}` : ''
+  const relativePath = uri?.path ? path.posix.join('../', path.posix.relative(uri?.path, root.uri.path)) : ''
+  const relativeRootPath = path.posix.normalize(relativePath)
   const newPathArr = allDirectories.slice(rootIndex + 1);
   template.files.forEach(async (item: FileTemplate) => {
-    const contentText = render(item.content.join('\n'), { name, workspaceFolder: relativePath });
+    const contentText = render(item.content.join('\n'), { name, workspaceFolder: relativeRootPath });
     const fileName = render(item.name, { name });
     const filePath = path.join(folderPath, fileName);
     await fse.outputFile(filePath, contentText);
